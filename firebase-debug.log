@@ -1,0 +1,24 @@
+[debug] [2022-07-31T04:12:44.124Z] ----------------------------------------------------------------------
+[debug] [2022-07-31T04:12:44.126Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Md Monir Hossain\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2022-07-31T04:12:44.127Z] CLI Version:   11.4.0
+[debug] [2022-07-31T04:12:44.127Z] Platform:      win32
+[debug] [2022-07-31T04:12:44.127Z] Node Version:  v16.14.2
+[debug] [2022-07-31T04:12:44.128Z] Time:          Sun Jul 31 2022 10:12:44 GMT+0600 (Bangladesh Standard Time)
+[debug] [2022-07-31T04:12:44.128Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-07-31T04:12:44.132Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2022-07-31T04:12:44.154Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-07-31T04:12:44.155Z] > authorizing via signed-in user (monirhossain6163@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  F:\project\reactjs\route-react
+
+[debug] [2022-07-31T04:12:45.007Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2022-07-31T04:12:45.007Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
