@@ -14,48 +14,56 @@ const About = () => {
     const [file, setFile] = useState(null);
     const [progress, setProgress] = useState(null);
     const [url, setUrl] = useState([]);
-    // console.log(file);
-    // console.log(progress);
-    // console.log(url);
+    const [imageName, setImageName] = useState([]);
     useEffect(() => {
-        const uploadFile = () => {
-            const storageRef = ref(storage, `profile/${file?.name}`);
-            const uploadTask = uploadBytesResumable(storageRef, file);
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const progress =
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log("Upload is " + progress + "% done");
-                    setProgress(progress);
-                    switch (snapshot.state) {
-                        case "paused":
-                            console.log("Upload is paused");
-                            break;
-                        case "running":
-                            console.log("Upload is running");
-                            break;
-                        default:
-                            break;
-                    }
-                },
-                (error) => {
-                    console.log(error);
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then(
-                        (downloadUrl) => {
-                            alert("Image upload to firebase successfully");
-                            console.log(downloadUrl);
-                            setUrl((prev) => [...prev, downloadUrl]);
+        const check = imageName.includes(file?.name);
+        if (check) {
+            alert("File already exists");
+            setFile(null);
+            deleteImage(url);
+            return;
+        } else {
+            const uploadFile = () => {
+                const storageRef = ref(storage, `profile/${file?.name}`);
+                const uploadTask = uploadBytesResumable(storageRef, file);
+                uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress =
+                            (snapshot.bytesTransferred / snapshot.totalBytes) *
+                            100;
+                        console.log("Upload is " + progress + "% done");
+                        setProgress(progress);
+                        switch (snapshot.state) {
+                            case "paused":
+                                console.log("Upload is paused");
+                                break;
+                            case "running":
+                                console.log("Upload is running");
+                                break;
+                            default:
+                                break;
                         }
-                    );
-                }
-            );
-        };
+                    },
+                    (error) => {
+                        console.log(error);
+                    },
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then(
+                            (downloadUrl) => {
+                                alert("Image upload to firebase successfully");
+                                // console.log(downloadUrl);
+                                setUrl((prev) => [...prev, downloadUrl]);
+                            }
+                        );
+                    }
+                );
+            };
 
-        file && uploadFile();
-    }, [file]);
+            file && uploadFile();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [file, imageName]);
 
     //firbase image get
 
@@ -66,28 +74,31 @@ const About = () => {
             response.items.forEach((item) => {
                 // console.log(item);
                 getDownloadURL(item).then((url) => {
-                    // console.log(url);
+                    const https = ref(storage, url);
+                    setImageName((prev) => [...prev, https?.name]);
                     setUrl((prev) => [...prev, url]);
                 });
             });
         });
     }, []);
     // firebase image delete
+    console.log(url);
     const deleteImage = async (url) => {
         const storageRef = ref(storage, url);
-
-        await deleteObject(storageRef)
-            .then(() => {
-                setUrl((prev) => prev.filter((item) => item !== url));
-                alert("Image deleted successfully");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if (storageRef) {
+            await deleteObject(storageRef)
+                .then(() => {
+                    setUrl((prev) => prev.filter((item) => item !== url[0]));
+                    alert("Image deleted successfully");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            alert("Image not found");
+        }
     };
-    useEffect(() => {
-        deleteImage();
-    }, []);
+
     return (
         <div>
             <h3>this about page </h3>
